@@ -7,7 +7,7 @@ const routes: Array<RouteConfig> = [
   // 全てのパスを掲示板コンポーネントへ遷移する
   {
     path: "*",
-    component: () => import("../components/Bbs.vue"),
+    component: () => import("../views/Bbs.vue"),
   },
 ];
 

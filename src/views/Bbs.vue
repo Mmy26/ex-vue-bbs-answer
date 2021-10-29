@@ -73,20 +73,20 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Bbs extends Vue {
   // 現在の記事一覧
-  currentArticleList = [];
+  private currentArticleList = [];
   // 投稿者名
-  articleName = "";
-  articleNameErrorMessage = "";
+  private articleName = "";
+  private articleNameErrorMessage = "";
   // 投稿内容
-  articleContent = "";
-  articleContentErrorMessage = "";
+  private articleContent = "";
+  private articleContentErrorMessage = "";
 
   // (上級課題)コメント入力欄と関連づける変数(複数あるため配列で持つ)
-  commentNameOfArticles: Array<string> = [];
-  commentNameOfArticlesErrorMessage: Array<string> = [];
-  commentContentOfArticles: Array<string> = [];
-  commentContentOfArticlesErrorMessage: Array<string> = [];
-  commentsErrorMessage = "";
+  private commentNameOfArticles: Array<string> = [];
+  private commentNameOfArticlesErrorMessage: Array<string> = [];
+  private commentContentOfArticles: Array<string> = [];
+  private commentContentOfArticlesErrorMessage: Array<string> = [];
+  private commentsErrorMessage = "";
 
   /**
    * 記事一覧を表示する.
