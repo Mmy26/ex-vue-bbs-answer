@@ -3,13 +3,13 @@
  */
 export class Comment {
   constructor(
-    /** id */
+    // id
     private _id: number,
-    /** 名前 */
+    // 名前
     private _name: string,
-    /** コメント */
+    // コメント
     private _content: string,
-    /** 記事ID */
+    // 記事ID
     private _articleId: number
   ) {}
 

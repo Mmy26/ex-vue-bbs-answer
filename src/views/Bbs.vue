@@ -68,6 +68,8 @@
 </template>
 
 <script lang="ts">
+import { Article } from "@/types/article";
+import { Comment } from "@/types/comment";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
@@ -97,7 +99,7 @@ export default class Bbs extends Vue {
    *
    */
   created(): void {
-    this.currentArticleList = this["$store"].getters.getArticles;
+    this.currentArticleList = this.$store.getters.getArticles;
 
     // (上級課題)コメント入力欄が複数あるため記事分配列を空文字で初期化する
     for (let i = 0; i < this.currentArticleList.length; i++) {
@@ -113,7 +115,7 @@ export default class Bbs extends Vue {
    * @returns 記事一覧情報
    */
   // get articleList(): Array<Article> {
-  //   return this["$store"].getters.getArticles;
+  //   return this.$store.getters.getArticles;
   // }
 
   /**
@@ -150,7 +152,7 @@ export default class Bbs extends Vue {
 
     // 正常処理
     // 最新の記事IDに１プラスする形で記事IDを作成する
-    let articles = this["$store"].getters.getArticles;
+    let articles = this.$store.getters.getArticles;
     let newId = 0;
     // もし記事が１件でもあれば最後の記事IDに1を足したものをIDとする
     if (articles.length) {
@@ -159,13 +161,8 @@ export default class Bbs extends Vue {
     // ミューテーションのaddArticleメソッドを呼ぶ
     // 第２引数には「名前：値,・・・」のオブジェクト形式で渡す
     // ミューテーションに渡す引数のことを「ペイロード」という
-    this["$store"].commit("addArticle", {
-      article: {
-        id: newId,
-        name: this.articleName,
-        content: this.articleContent,
-        commentList: [],
-      },
+    this.$store.commit("addArticle", {
+      article: new Article(newId, this.articleName, this.articleContent, []),
     });
     // 入力値をフォームからクリアする
     this.articleName = "";
@@ -224,13 +221,13 @@ export default class Bbs extends Vue {
     // ※この時渡すコメントIDはnullで良い
     // 第２引数には「名前：値,・・・」のオブジェクト形式で渡す
     // ミューテーションに渡す引数のことを「ペイロード」という
-    this["$store"].commit("addComment", {
-      comment: {
-        id: null,
-        name: this.commentNameOfArticles[articleIndex],
-        content: this.commentContentOfArticles[articleIndex],
-        articleId: articleId,
-      },
+    this.$store.commit("addComment", {
+      comment: new Comment(
+        -1,
+        this.commentNameOfArticles[articleIndex],
+        this.commentContentOfArticles[articleIndex],
+        articleId
+      ),
     });
     // 入力値をフォームからクリアする
     this.commentNameOfArticles[articleIndex] = "";
@@ -246,7 +243,7 @@ export default class Bbs extends Vue {
     // ミューテーションのdeleteArticleメソッドを呼ぶ
     // 第２引数には「名前：値,・・・」のオブジェクト形式で渡す
     // ミューテーションに渡す引数のことを「ペイロード」という
-    this["$store"].commit("deleteArticle", {
+    this.$store.commit("deleteArticle", {
       articleIndex: articleIndex,
     });
   }
