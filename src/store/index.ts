@@ -47,15 +47,15 @@ export default new Vuex.Store({
       const article = state.articles.find(
         (article) => article.id == payload.comment.articleId
       );
-      // 渡されたpayloadからコメントを生成
-      const comment = new Comment(
-        payload.comment.id,
-        payload.comment.name,
-        payload.comment.content,
-        payload.comment.articleId
-      );
       // 記事が存在していたらCommentListにコメントを追加
-      if (article != null) {
+      if (article) {
+        // 渡されたpayloadからコメントを生成
+        const comment = new Comment(
+          payload.comment.id,
+          payload.comment.name,
+          payload.comment.content,
+          payload.comment.articleId
+        );
         article.commentList.unshift(comment);
       }
     },
