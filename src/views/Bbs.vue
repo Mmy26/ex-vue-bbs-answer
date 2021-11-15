@@ -61,12 +61,14 @@ import CompCommentForm from "@/components/CompCommentForm.vue";
 })
 export default class Bbs extends Vue {
   // 現在の記事一覧
-  private currentArticleList = [];
+  private currentArticleList = new Array<Article>();
   // 投稿者名
   private articleName = "";
+  // 投稿者名エラーメッセージ
   private articleNameErrorMessage = "";
   // 投稿内容
   private articleContent = "";
+  // 投稿内容エラーメッセージ
   private articleContentErrorMessage = "";
 
   /**
@@ -86,6 +88,10 @@ export default class Bbs extends Vue {
    */
   addArticle(): void {
     // (上級課題)入力値チェック
+    // 今までのエラーメッセージを削除
+    this.articleNameErrorMessage = "";
+    this.articleContentErrorMessage = "";
+
     let hasErrors = false;
     if (this.articleName === "") {
       this.articleNameErrorMessage = "投稿者名を入力してください";
@@ -93,8 +99,6 @@ export default class Bbs extends Vue {
     } else if (50 < this.articleName.length) {
       this.articleNameErrorMessage = "投稿者名は50文字以内で入力してください";
       hasErrors = true;
-    } else {
-      this.articleNameErrorMessage = "";
     }
 
     if (this.articleContent === "") {
@@ -104,8 +108,6 @@ export default class Bbs extends Vue {
       this.articleContentErrorMessage =
         "投稿内容は50文字以内で入力してください";
       hasErrors = true;
-    } else {
-      this.articleContentErrorMessage = "";
     }
 
     if (hasErrors) {
@@ -135,7 +137,7 @@ export default class Bbs extends Vue {
   /**
    * 記事を削除する.
    *
-   * @param articleId : 記事ID
+   * @param articleIndex : 記事のINDEX番号
    */
   deleteArticle(articleIndex: number): void {
     // ミューテーションのdeleteArticleメソッドを呼ぶ

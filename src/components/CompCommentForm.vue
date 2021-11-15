@@ -22,17 +22,24 @@
 
 <script lang="ts">
 import { Prop, Component, Vue } from "vue-property-decorator";
-
 import { Comment } from "@/types/comment";
 
+/**
+ * コメントフォームコンポーネント.
+ */
 @Component
 export default class CompCommentForm extends Vue {
+  // 親コンポーネントから受け取る記事ID
   @Prop()
   private aritcleId!: number;
 
+  // コメント者名
   private commentName = "";
+  // コメント者名エラーメッセージ
   private commentNameErrorMessage = "";
+  // コメント内容
   private commentContent = "";
+  // コメント内容エラーメッセージ
   private commentContentErrorMessage = "";
 
   /**
@@ -53,9 +60,6 @@ export default class CompCommentForm extends Vue {
     } else if (50 < this.commentName.length) {
       this.commentNameErrorMessage = "コメント名は50文字以内で入力してください";
       hasErrors = true;
-    } else {
-      // エラーがなければエラーメッセージを空文字にする
-      this.commentNameErrorMessage = "";
     }
 
     if (this.commentContent === "") {
@@ -65,9 +69,6 @@ export default class CompCommentForm extends Vue {
       this.commentContentErrorMessage =
         "コメント内容は50文字以内で入力してください";
       hasErrors = true;
-    } else {
-      // エラーがなければエラーメッセージを空文字にする
-      this.commentContentErrorMessage = "";
     }
 
     if (hasErrors) {
