@@ -45,7 +45,7 @@ export default new Vuex.Store({
     addComment(state, payload) {
       // 渡されたpayload中のaritcleIdから追加対象の記事を検索する
       const article = state.articles.find(
-        (article) => article.id == payload.comment.articleId
+        (article) => article.id === payload.comment.articleId
       );
       // 記事が存在していたらCommentListにコメントを追加
       if (article) {
