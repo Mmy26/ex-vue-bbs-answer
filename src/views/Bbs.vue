@@ -116,18 +116,12 @@ export default class Bbs extends Vue {
     }
 
     // 正常処理
-    // 最新の記事IDに１プラスする形で記事IDを作成する
-    let articles = this.$store.getters.getArticles;
-    let newId = 0;
-    // もし記事が１件でもあれば最後の記事IDに1を足したものをIDとする
-    if (articles.length) {
-      newId = articles[0].id + 1;
-    }
     // ミューテーションのaddArticleメソッドを呼ぶ
+    // ※この時渡すコメントIDは-1にする(通常はWebAPI、今回はVuexストアで採番するため)
     // 第２引数には「名前：値,・・・」のオブジェクト形式で渡す
     // ミューテーションに渡す引数のことを「ペイロード」という
     this.$store.commit("addArticle", {
-      article: new Article(newId, this.articleName, this.articleContent, []),
+      article: new Article(-1, this.articleName, this.articleContent, []),
     });
     // 入力値をフォームからクリアする
     this.articleName = "";
@@ -137,7 +131,7 @@ export default class Bbs extends Vue {
   /**
    * 記事を削除する.
    *
-   * @param articleIndex : 記事のINDEX番号
+   * @param articleIndex - 記事のINDEX番号
    */
   deleteArticle(articleIndex: number): void {
     // ミューテーションのdeleteArticleメソッドを呼ぶ

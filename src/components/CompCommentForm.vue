@@ -45,7 +45,7 @@ export default class CompCommentForm extends Vue {
   /**
    * コメントを追加する.
    *
-   * @param articleId : 記事ID
+   * @param articleId - 記事ID
    */
   addComment(articleId: number): void {
     // (上級課題)入力値チェック
@@ -78,7 +78,7 @@ export default class CompCommentForm extends Vue {
 
     // 正常処理
     // ミューテーションのaddCommentメソッドを呼ぶ
-    // ※この時渡すコメントIDは-1で良い
+    // ※この時渡すコメントIDは-1にする(通常はWebAPI、今回はVuexストアで採番するため)
     // 第２引数には「名前：値,・・・」のオブジェクト形式で渡す
     // ミューテーションに渡す引数のことを「ペイロード」という
     this.$store.commit("addComment", {

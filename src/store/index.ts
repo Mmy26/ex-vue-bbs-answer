@@ -23,10 +23,19 @@ export default new Vuex.Store({
   mutations: {
     /**
      * 記事を追加する.
-     * @param state ステート
+     * @param state - ステート
      * @param payload 記事情報
      */
     addArticle(state, payload) {
+      // 最新の記事IDに１プラスする形で記事IDを作成する
+      let newArticleId = 0;
+      // もし記事が１件でもあれば最後の記事IDに1を足したものをIDとする
+      if (state.articles.length > 0) {
+        newArticleId = state.articles[0].id + 1;
+      }
+      // payloadで渡ってきたArticleオブジェクトの-1になっているIDを新しいIDで上書き
+      payload.article.id = newArticleId;
+
       // 受け取ったpayload内のarticleをstateのarticlesの0番目に追加する
       state.articles.unshift(payload.article);
 
@@ -39,23 +48,32 @@ export default new Vuex.Store({
      * コメントを追加する.
      *
      * @remarks 渡されたPayload中のaritcleIdから対象の記事を見つけ、その中のCommentListにコメントを追加します
-     * @param state ステート
-     * @param payload コメント情報
+     * @param state - ステート
+     * @param payload - コメント情報
      */
     addComment(state, payload) {
       // 渡されたpayload中のaritcleIdから追加対象の記事を検索する
       const article = state.articles.find(
         (article) => article.id === payload.comment.articleId
       );
-      // 記事が存在していたらCommentListにコメントを追加
       if (article) {
+        // 記事が存在していたら最新のコメントIDに１プラスする形でコメントIDを作成する
+        let newCommentId = 0;
+        // もしコメントが１件でもあれば最後のコメントIDに1を足したものをIDとする
+        if (article.commentList.length > 0) {
+          newCommentId = article.commentList[0].id + 1;
+        }
+        // payloadで渡ってきたCommentオブジェクトの-1になっているIDを新しいIDで上書き
+        payload.comment.id = newCommentId;
+
+        //CommentListにコメントを追加
         article.commentList.unshift(payload.comment);
       }
     },
     /**
      * 記事を削除する.
      *
-     * @param state ステート
+     * @param state - ステート
      * @param payload 記事Index
      */
     deleteArticle(state, payload) {
@@ -67,7 +85,7 @@ export default new Vuex.Store({
     /**
      * 記事一覧を返す.
      *
-     * @param state ステート
+     * @param state -  ステート
      * @returns 記事一覧情報 (新しい投稿が上に来る順序)
      */
     getArticles(state) {
