@@ -49,14 +49,7 @@ export default new Vuex.Store({
       );
       // 記事が存在していたらCommentListにコメントを追加
       if (article) {
-        // 渡されたpayloadからコメントを生成
-        const comment = new Comment(
-          payload.comment.id,
-          payload.comment.name,
-          payload.comment.content,
-          payload.comment.articleId
-        );
-        article.commentList.unshift(comment);
+        article.commentList.unshift(payload.comment);
       }
     },
     /**

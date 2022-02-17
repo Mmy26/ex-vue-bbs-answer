@@ -78,7 +78,7 @@ export default class CompCommentForm extends Vue {
 
     // 正常処理
     // ミューテーションのaddCommentメソッドを呼ぶ
-    // ※この時渡すコメントIDはnullで良い
+    // ※この時渡すコメントIDは-1で良い
     // 第２引数には「名前：値,・・・」のオブジェクト形式で渡す
     // ミューテーションに渡す引数のことを「ペイロード」という
     this.$store.commit("addComment", {
